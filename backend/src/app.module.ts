@@ -21,7 +21,10 @@ import { isAuthenticated } from './app.middleware';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/Stream'),
+    ConfigModule.forRoot({
+      envFilePath: '.env.local',
+    }),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_URL),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Video.name, schema: VideoSchema }]),
     MulterModule.register({
@@ -32,9 +35,6 @@ import { isAuthenticated } from './app.middleware';
           cb(null, `${uuidv4()}-${Date.now()}.${ext}`);
         },
       }),
-    }),
-    ConfigModule.forRoot({
-      envFilePath: '.env.local',
     }),
     JwtModule.register({
       secret,
