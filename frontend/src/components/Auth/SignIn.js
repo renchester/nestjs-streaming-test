@@ -10,13 +10,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function SignIn(props) {
-  const { setIsLoggedIn } = props
-  const [errrorMessage, setErrorMessage] = React.useState('')
+  const { setIsLoggedIn } = props;
+  const [errrorMessage, setErrorMessage] = React.useState('');
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -24,17 +24,19 @@ export default function SignIn(props) {
     const formData = new FormData(event.currentTarget);
     const form = {
       email: formData.get('email'),
-      password: formData.get('password')
+      password: formData.get('password'),
     };
-    const { data } = await axios.post("http://localhost:3002/api/v1/user/signin", form);
+    const { data } = await axios.post(
+      'http://localhost:3000/api/v1/user/signin',
+      form,
+    );
     if (data.status === parseInt('401')) {
-      setErrorMessage(data.response)
+      setErrorMessage(data.response);
     } else {
       localStorage.setItem('token', data.token);
-      setIsLoggedIn(true)
-      navigate('/video')
+      setIsLoggedIn(true);
+      navigate('/video');
     }
-
   };
   return (
     <ThemeProvider theme={theme}>
@@ -46,15 +48,16 @@ export default function SignIn(props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-
-          </Avatar>
+          }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -82,8 +85,7 @@ export default function SignIn(props) {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+              sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
             <Grid container>
@@ -100,7 +102,6 @@ export default function SignIn(props) {
             </Grid>
           </Box>
         </Box>
-
       </Container>
     </ThemeProvider>
   );
