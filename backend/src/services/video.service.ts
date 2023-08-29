@@ -18,7 +18,7 @@ export class VideoService {
 
   async createVideo(video: NonNullable<unknown>): Promise<Video> {
     const newVideo = new this.videoModel(video);
-    return newVideo.save();
+    return await newVideo.save();
   }
 
   async readVideo(id): Promise<any> {

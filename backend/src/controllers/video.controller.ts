@@ -38,8 +38,8 @@ export class VideoController {
     const requestBody = {
       createdBy: request.user,
       title: video.title,
-      video: files.video[0].filename,
-      coverImage: files.cover[0].filename,
+      video: files.video[0] ? files.video[0].filename : '',
+      coverImage: files.cover && files.cover[0] ? files.cover[0].filename : '',
     };
 
     const newVideo = await this.videoService.createVideo(requestBody);
