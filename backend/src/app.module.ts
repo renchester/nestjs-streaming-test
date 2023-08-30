@@ -23,6 +23,7 @@ import { isAuthenticated } from './app.middleware';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env.local',
+      isGlobal: true, // makes env variables global
     }),
     MongooseModule.forRoot(process.env.DB_CONNECTION_URL),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
